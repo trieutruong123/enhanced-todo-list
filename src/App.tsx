@@ -1,11 +1,17 @@
-import { Provider } from 'react-redux';
-import { Box, Container, Grid, Typography } from '@mui/material';
-import store from 'store';
-import { ToDoForm, ToDoList, HypnosisLoading } from 'components';
+import { Provider } from "react-redux";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import store from "store";
+import { ToDoForm, ToDoList } from "components";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+
+  
+
   return (
     <>
+      <CssBaseline />
       <Provider store={store}>
         <Box
           component="main"
@@ -14,26 +20,33 @@ function App() {
             py: 8,
           }}
         >
-          <HypnosisLoading />
           <Container
             maxWidth="lg"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <h4>Enhanced Todo List</h4>
+            <h1
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "800",
+                fontSize: "2.2rem",
+              }}
+            >
+              Enhanced Todo List
+            </h1>
             <Grid
               container
               spacing={3}
               sx={{
                 pt: 3,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Grid item lg={7} md={7} sm={7} xs={12}>
@@ -51,4 +64,3 @@ function App() {
 }
 
 export default App;
-

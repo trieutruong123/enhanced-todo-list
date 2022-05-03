@@ -1,42 +1,48 @@
-import { v4 as uuid } from 'uuid';
-import {
-  ADD_TO_DO,
-  DELETE_TO_DO,
-  MARK_AS_COMPLETED,
-  GET_ALL_TO_DOS,
-} from '../types';
+import { api } from "services";
+import { v4 as uuidv4 } from "uuid";
+import { TodoActionTypes, TodoItem } from "types";
 
-export const  addToDo = (content)=> (dispatch,getState) =>{
-  const payload = {
-    id: uuid(),
-    title: content,
-    completed: false,
+export const addToDo =
+  (content: string, assignedMemberId: string, date: Date) =>
+  (dispatch: any, getState: any) => {
+    const payload = {
+      value: {
+        id: uuidv4(),
+        title: content,
+        isCompleted: false,
+        date,
+        assignedMemberId,
+        isOutOfDate: false,
+      },
+    };
+    return dispatch({
+      type: TodoActionTypes.ADD_TO_DO,
+      payload,
+    });
   };
-  dispatch( {
-    type: ADD_TO_DO,
-    payload,
-  });
-}
-export const  deleteToDo = (id)=>(dispatch,getState)=> {
-  const payload = { id };
-  dispatch( {
-    type: DELETE_TO_DO,
-    payload,
-  });
-}
 
-export const  markItemAsCompleted = (id) => (dispatch,getState)=>{
-  const payload = { id };
-  dispatch( {
-    type: MARK_AS_COMPLETED,
+export const deleteToDo = (id: string) => (dispatch: any, getState: any) => {
+  const payload = { value: id };
+  return dispatch({
+    type: TodoActionTypes.DELETE_TO_DO,
     payload,
   });
-}
+};
 
-export const  getAllTodos = (initialData)=>(dispatch,getState)=> {
-  const payload = { initialData };
-  dispatch( {
-    type: GET_ALL_TO_DOS,
+export const markItemAsCompleted =
+  (id: string) => (dispatch: any, getState: any) => {
+    const payload = { value: id };
+    return dispatch({
+      type: TodoActionTypes.MARK_AS_COMPLETED,
+      payload,
+    });
+  };
+
+export const getAllTodos = () => async (dispatch: any, getState: any) => {
+  const intialData = await api.requestTodos();
+  const payload = { value: intialData };
+  return dispatch({
+    type: TodoActionTypes.RECEIVE_ALL_TO_DOS,
     payload,
   });
-}
+};
