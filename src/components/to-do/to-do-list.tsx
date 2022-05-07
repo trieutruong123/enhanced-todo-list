@@ -9,10 +9,15 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteToDo, getAllTodos, markItemAsCompleted } from "store/actions";
-import { useAppDispatch, useAppSelector } from "hooks";
-import { getAllMembers } from "store/actions/member-action";
 import { format } from "date-fns";
+import { getVisibleTodos } from "helpers";
+import {
+  deleteToDo,
+  getAllTodos,
+  markItemAsCompleted,
+  getAllMembers,
+} from "store/actions";
+import { useAppDispatch, useAppSelector } from "hooks";
 
 export default function TodoList() {
   const dispatch = useAppDispatch();
@@ -28,7 +33,7 @@ export default function TodoList() {
   const todoStore = useAppSelector((state) => state.todoReducer);
   const memberStore = useAppSelector((state) => state.memberReducer);
   const { members } = memberStore;
-  const { todos } = todoStore;
+  const todos = getVisibleTodos(todoStore);
 
   const handleDeleteTodo = (id: string) => {
     dispatch(deleteToDo(id));
@@ -90,7 +95,7 @@ export default function TodoList() {
                 <ListItemText
                   id={labelId}
                   primary={value.title}
-                  secondary={format(value.date, `dd-MM-yyyy`)}
+                  secondary={format(value.date, `dd/MM/yyyy HH:mm`)}
                 />
                 <ListItemAvatar>
                   <Avatar

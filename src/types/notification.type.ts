@@ -1,4 +1,4 @@
-type NotificationVariant = "success" | "error" | "warning";
+export type NotificationVariant = "success" | "error" | "warning";
 
 export type NotificationItem = {
   id: string;
@@ -7,7 +7,7 @@ export type NotificationItem = {
 };
 
 export type NotificationsStore = {
-  todos: Array<NotificationItem>;
+  notis: Array<NotificationItem>;
 };
 
 type ActionMap<M extends { [index: string]: any }> = {
@@ -23,12 +23,14 @@ type ActionMap<M extends { [index: string]: any }> = {
 
 export enum NotificationActionTypes {
   PUSH_NEW_MESSAGE = "PUSH_NEW_MESSAGE",
+  POP_FIRST_NOTIFICATION = "POP_FIRST_NOTIFICATION",
 }
 
 export interface NotificationPayload {
   [NotificationActionTypes.PUSH_NEW_MESSAGE]: {
     value: NotificationItem;
   };
+  [NotificationActionTypes.POP_FIRST_NOTIFICATION]: {};
 }
 
 export type NotificationActions =

@@ -15,7 +15,6 @@ export const TodoList: Array<TodoItem> = [
     title: "delectus aut autem",
     isCompleted: false,
     date: new Date("Tue May 03 2022 21:48:35"),
-    isOutOfDate: false,
   },
   {
     assignedMemberId: "1",
@@ -23,7 +22,6 @@ export const TodoList: Array<TodoItem> = [
     title: "quis ut nam facilis et officia qui",
     isCompleted: false,
     date: new Date("Tue May 03 2022 21:48:35"),
-    isOutOfDate: false,
   },
   {
     assignedMemberId: "2",
@@ -39,7 +37,6 @@ export const TodoList: Array<TodoItem> = [
     title: "aliquam aut quasi",
     isCompleted: true,
     date: new Date("Tue May 03 2022 21:48:35"),
-    isOutOfDate: false,
   },
   {
     assignedMemberId: "3",
@@ -47,7 +44,6 @@ export const TodoList: Array<TodoItem> = [
     title: "cupiditate necessitatibus ullam aut quis dolor voluptate",
     isCompleted: true,
     date: new Date("Tue May 03 2022 21:48:35"),
-    isOutOfDate: false,
   },
   {
     assignedMemberId: "4",
@@ -55,7 +51,6 @@ export const TodoList: Array<TodoItem> = [
     title: "doloremque aut dolores quidem fuga qui nulla",
     isCompleted: true,
     date: new Date("Tue May 03 2022 21:48:35"),
-    isOutOfDate: false,
   },
   {
     assignedMemberId: "5",
@@ -63,7 +58,6 @@ export const TodoList: Array<TodoItem> = [
     title: "suscipit qui totam",
     isCompleted: true,
     date: new Date("Tue May 03 2022 21:48:35"),
-    isOutOfDate: false,
   },
 ];
 

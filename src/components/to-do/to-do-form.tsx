@@ -1,21 +1,13 @@
 import { useState } from "react";
-import {
-  Box,
-  Paper,
-  Button,
-  InputBase,
-  IconButton,
-  MenuItem,
-  TextField,
-  Avatar,
-} from "@mui/material";
+import { Box, Paper, Button, MenuItem, TextField, Avatar } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import SendIcon from "@mui/icons-material/Send";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { addToDo } from "store/actions";
 import { useAppDispatch, useAppSelector } from "hooks";
+
 import { Member } from "types";
 
 export default function TodoForm() {
@@ -24,7 +16,7 @@ export default function TodoForm() {
   const { members } = memberStore;
   const [content, setContent] = useState("");
   const [date, setDate] = useState<Date | null>(new Date());
-  const [memberId, setMember] = useState<number>(0);
+  const [memberIdx, setMemberIdx] = useState<number>(0);
 
   const memberAvatarArr = members.map((item) => (
     <Box display="flex" flexDirection={"row"} alignItems="center">
@@ -40,15 +32,19 @@ export default function TodoForm() {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event && event.key === "Enter") {
-      dispatch(addToDo(content, members[memberId].id, date || new Date()));
-      setContent("");
+      if (content) {
+        dispatch(addToDo(content, members[memberIdx].id, date || new Date()));
+        setContent("");
+      }
     }
   };
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    dispatch(addToDo(content, members[memberId].id, date || new Date()));
-    setContent("");
+    if (content) {
+      dispatch(addToDo(content, members[memberIdx].id, date || new Date()));
+      setContent("");
+    }
   };
 
   const handleDateChange = (newValue: Date | null) => {
@@ -57,9 +53,9 @@ export default function TodoForm() {
 
   const handleMemberSelectChange = (event: SelectChangeEvent) => {
     const index = Number.parseInt(event.target.value);
-    console.log(members[index]);
-    setMember(index);
+    setMemberIdx(index);
   };
+
 
   return (
     <Box
@@ -90,15 +86,16 @@ export default function TodoForm() {
           justifyContent="start"
         >
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DesktopDatePicker
+            <DateTimePicker
               label="Deadline"
-              inputFormat="dd/MM/yyyy"
+              inputFormat="dd/MM/yyyy HH:mm"
               value={date}
               onChange={handleDateChange}
-              renderInput={(params) => (
-                <TextField sx={{ width: "50%", mr: "1rem" }} {...params} />
+              renderInput={(props:any) => (
+                <TextField sx={{ width: "50%", mr: "1rem" }} {...props} />
               )}
-            />
+            >
+          </DateTimePicker>
           </LocalizationProvider>
           <Box flexGrow="1 1" />
           <Select
@@ -112,7 +109,7 @@ export default function TodoForm() {
             }}
             type={"number"}
             onChange={handleMemberSelectChange}
-            value={memberId.toString()}
+            value={memberIdx.toString()}
             renderValue={(index) => memberAvatarArr[Number.parseInt(index)]}
           >
             {members.map((member: Member, index: number) => (
